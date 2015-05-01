@@ -179,7 +179,7 @@ public class GeoMesaTester
         AccumuloRdfConfiguration conf = new AccumuloRdfConfiguration();
         AccumuloRyaDAO dao = new AccumuloRyaDAO();
         
-        Connector connector = new ZooKeeperInstance("accumuloInstance", "192.168.1.103:2181").getConnector("root", "secret");
+        Connector connector = new ZooKeeperInstance(instanceName, zooKeepers).getConnector("root", "secret");
         dao.setConnector(connector);
         conf.setTablePrefix("triplestore_");
         dao.setConf(conf);
