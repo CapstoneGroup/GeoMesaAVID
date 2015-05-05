@@ -1,6 +1,8 @@
-/*
+/**
  * New and improved GeoMesaTester
- */
+ * 
+ * GeoMesaTester utilizes the GeoMesaGeoIndexer to index and then query RDF data.
+ **/
 
 import java.io.IOException;
 import java.util.Collection;
@@ -56,6 +58,10 @@ public class GeoMesaTester
 	protected static RdfCloudTripleStore store;
 	protected static ValueFactory vf;
 	
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) 
 	{
 	    try 
@@ -113,6 +119,13 @@ public class GeoMesaTester
 	    }
 	}
 	
+	
+	/**
+	 * 
+	 * @param conf
+	 * @return
+	 * @throws IOException
+	 */
 	private static GeoMesaGeoIndexer getIndexer(Configuration conf) throws IOException
 	{
 		try
@@ -149,6 +162,13 @@ public class GeoMesaTester
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 * @throws AccumuloException
+	 * @throws AccumuloSecurityException
+	 * @throws TableNotFoundException
+	 */
 	private static boolean getAccumuloConnection() throws AccumuloException, AccumuloSecurityException, TableNotFoundException
 	{
 		try
@@ -173,6 +193,11 @@ public class GeoMesaTester
 		}
 	}
 	
+	/**
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	private static RdfCloudTripleStore getRdfStore() throws Exception 
 	{
         final RdfCloudTripleStore store = new RdfCloudTripleStore();
