@@ -2,6 +2,11 @@
  * New and improved GeoMesaTester
  * 
  * GeoMesaTester utilizes the GeoMesaGeoIndexer to index and then query RDF data.
+ * 
+ * @author Greg Kolega
+ * @author Nick Stepanek
+ * @author Taran Barber
+ * @author Derek Pacula
  **/
 
 import java.io.IOException;
@@ -59,6 +64,7 @@ public class GeoMesaTester
 	protected static ValueFactory vf;
 	
 	/**
+	 * Manages the RDF indexing and querying.
 	 * 
 	 * @param args
 	 */
@@ -121,9 +127,10 @@ public class GeoMesaTester
 	
 	
 	/**
+	 * Creates a GeoMesaGeoIndexer with a given Configuration.
 	 * 
-	 * @param conf
-	 * @return
+	 * @param conf a configuration to connect to Accumulo
+	 * @return a GeoMesaGeoIndexer
 	 * @throws IOException
 	 */
 	private static GeoMesaGeoIndexer getIndexer(Configuration conf) throws IOException
@@ -163,8 +170,9 @@ public class GeoMesaTester
 	}
 	
 	/**
+	 * Creates and tests a connection to an Accumulo table.
 	 * 
-	 * @return
+	 * @return whether the connection is successful
 	 * @throws AccumuloException
 	 * @throws AccumuloSecurityException
 	 * @throws TableNotFoundException
@@ -194,8 +202,9 @@ public class GeoMesaTester
 	}
 	
 	/**
+	 * Returnes a triplestore for storing RDF data in Accumulo.
 	 * 
-	 * @return
+	 * @return an RdfCloudTripleStore for staring RDF data in the Accumulo table
 	 * @throws Exception
 	 */
 	private static RdfCloudTripleStore getRdfStore() throws Exception 
