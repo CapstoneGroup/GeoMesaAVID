@@ -58,7 +58,7 @@ import com.vividsolutions.jts.geom.impl.CoordinateArraySequence;
 public class GeoMesaTester 
 {
 	protected static String instanceName = "accumuloInstance";
-	protected static String zooKeepers = "192.168.1.103:2181";
+	protected static String zooKeepers = "192.168.2.8:2181";
 	protected static StatementContraints constraints = new StatementContraints();
 	protected static RdfCloudTripleStore store;
 	protected static ValueFactory vf;
@@ -78,7 +78,7 @@ public class GeoMesaTester
 	    	conf.set(ConfigUtils.CLOUDBASE_ZOOKEEPERS, zooKeepers);
 	    	conf.set(ConfigUtils.CLOUDBASE_USER, "root");
 	    	conf.set(ConfigUtils.CLOUDBASE_PASSWORD, "secret");
-	    	conf.set(ConfigUtils.GEO_TABLENAME, "sometable");
+	    	conf.set(ConfigUtils.GEO_TABLENAME, "rya_geo");
 	    	conf.set(ConfigUtils.GEO_NUM_PARTITIONS, "2");
 	    	
 	    	conf.set(ConfigUtils.GEO_PREDICATES_LIST, "http://mynamespace/hasCoords");
@@ -104,20 +104,21 @@ public class GeoMesaTester
 	    	//CoordinateSequence sequence=  csFac.create(array);
 	    	
 	    	// set up the geometry constraints
-	    	Envelope WORLD = new Envelope(-100, 100, -100, 100);
+	    	Envelope WORLD = new Envelope(-90,90, -180, 180);
 	    	Geometry geo = JTS.toGeometry(WORLD);
 	    	
 	    	// run query
-	    	CloseableIteration<Statement, QueryEvaluationException> results = indexer.queryContains(geo, constraints);
+	    	System.out.println("Performing query");
+	    	CloseableIteration<Statement, QueryEvaluationException> results = indexer.queryWithin(geo, constraints);
 	    
-	    	System.out.println(results.hasNext());
+	    	if (results.hasNext()) {
+	    		System.out.println("Received query results");
+	    	}
 	    	while (results.hasNext()) 
 	    	{
 	    		System.out.println(results.next());
 	    	}
-	    	
-	    	
-	    	System.out.println("Got here");
+	    
 	    } 
 	    catch (Exception e) 
 	    {
@@ -150,9 +151,9 @@ public class GeoMesaTester
 	    	
 	    	// create and store the statement, creating a feature in Accumulo
 	    	Statement stmt = vf.createStatement(s, p, o);
-	    	System.out.println(stmt.toString());
-	    	System.out.println(store.toString());
+	    	System.out.println("Storing statement: " + stmt.toString());
 	    	indexer.storeStatement(stmt);
+	    	System.out.println("Statement stored successfully");
 	    	
 	    	// set the predicate and subject constraints for the query
 	    	Set<URI> set = new HashSet();
