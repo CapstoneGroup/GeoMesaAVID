@@ -125,7 +125,7 @@ public class GeoMesaIndexingIngest {
 			throw new RuntimeException("Unexpected Exception occured: " + e.getMessage());
 		}
 		finally {
-			if (indexer != null) {
+			if (indexer != null) { 
 				try {
 					indexer.close();
 				}
